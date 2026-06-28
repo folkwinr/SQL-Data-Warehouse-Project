@@ -1,3 +1,6 @@
+# 🥉 Bronze Layer - `load_bronze` Procedure Structure
+
+```text
 📦 Stored Procedure
 (bronze.load_bronze)
 │
@@ -78,3 +81,4 @@
 │     └── 🖨️ Print Error
 │
 └── 🟦 END
+```
