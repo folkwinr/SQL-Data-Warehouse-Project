@@ -163,29 +163,4 @@ EXEC silver.load_silver;
 tests/quality_checks_silver.sql
 ```
 
----
-
-## Repository Structure
-
-```
-scripts/
-├── 2_bronze/
-│   ├── init_database/       # DB and schema creation
-│   └── ddl_bronze/          # Bronze DDL + load procedure
-├── 1_silver/
-│   ├── ddl_silver/          # Silver table definitions
-│   ├── silver_procedure/    # Silver load stored procedure
-│   └── columns/             # Per-column exploration and final scripts
-│       ├── crm_cust_info/
-│       ├── crm_prd_info/
-│       ├── crm_sales_details/
-│       ├── erp_cust_az12/
-│       ├── erp_loc_a101/
-│       └── erp_px_cat_g1v2/
-└── 3_gold/                  # Analytics-ready views (in progress)
-tests/
-└── quality_checks_silver.sql
-datasets/                    # Source CSV files
-```
-
 Each column folder under `columns/` contains an `exploration/` script (ad-hoc profiling queries) and a `final_script/` (the transformation logic promoted into the stored procedure).
