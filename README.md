@@ -175,16 +175,17 @@ Instead of creating physical tables, this layer uses SQL **Views** built on top 
 
 ---
 
-##  Business Rules
+## Business Rules
 
-A few business rules were applied while building the Gold layer.
+The Gold layer applies the following business rules:
 
 - CRM is the main source for customer and product information.
 - ERP data is used to enrich customer and product details.
 - CRM gender has priority over ERP gender.
 - ERP gender is only used when CRM data is missing.
-- Only active products are included in `gold.dim_products` using `prd_end_dt IS NULL`.
-- Fact tables use surrogate keys from the dimension tables.
+- Only active products are included in the product dimension.
+- Surrogate keys are generated in the Gold views using `ROW_NUMBER()` to support dimensional modeling.
+- The fact table references customer and product surrogate keys from the dimension views.
 
 ---
 
