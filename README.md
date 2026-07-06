@@ -256,7 +256,17 @@ sql/ddl/create_bronze_tables.sql
 
 ---
 
-## 3. Load the Bronze Layer
+## 3. Create the Bronze Load Procedure
+
+Create the stored procedure responsible for loading the source files into the Bronze layer.
+
+```sql
+sql/bronze/load_bronze.sql
+```
+
+---
+
+## 4. Load the Bronze Layer
 
 Before running the procedure, update the **BULK INSERT** file paths so they point to your local dataset folder.
 
@@ -266,11 +276,11 @@ Then run:
 EXEC bronze.load_bronze;
 ```
 
-This procedure loads the raw source files into the Bronze layer without applying any transformations.
+This procedure loads the raw source data into the Bronze layer without applying any transformations.
 
 ---
 
-## 4. Create the Silver Tables
+## 5. Create the Silver Tables
 
 Create the tables that will store the cleaned and standardized data.
 
@@ -280,7 +290,17 @@ sql/ddl/create_silver_tables.sql
 
 ---
 
-## 5. Load the Silver Layer
+## 6. Create the Silver Load Procedure
+
+Create the stored procedure responsible for transforming Bronze data into the Silver layer.
+
+```sql
+sql/silver/load_silver.sql
+```
+
+---
+
+## 7. Load the Silver Layer
 
 Run the Silver ETL process to clean, standardize, and transform the Bronze data.
 
@@ -290,7 +310,7 @@ EXEC silver.load_silver;
 
 ---
 
-## 6. Validate the Silver Layer
+## 8. Validate the Silver Layer
 
 Run the quality check script to verify that the Silver data was loaded and transformed correctly.
 
@@ -300,9 +320,9 @@ sql/silver/quality_checks_silver.sql
 
 ---
 
-## 7. Create the Gold Views
+## 9. Create the Gold Views
 
-Create the final business-ready views used for reporting and analytics.
+Create the business-ready views used for reporting and analytics.
 
 ```sql
 sql/gold/create_gold_views.sql
@@ -310,7 +330,7 @@ sql/gold/create_gold_views.sql
 
 ---
 
-## 8. Validate the Gold Layer
+## 10. Validate the Gold Layer
 
 Run the final quality checks to validate surrogate keys and fact-to-dimension relationships.
 
