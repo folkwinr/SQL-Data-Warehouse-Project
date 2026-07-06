@@ -70,9 +70,9 @@ CRM System              ERP System
                    ▼
 ┌──────────────────────────────────────┐
 │            SILVER LAYER              │      
-│                                      │        --->  Cleaned, standardized, deduplicated data  
+│                                      │        
 │  crm_cust_info                       │      
-│  crm_prd_info                        │
+│  crm_prd_info                        │        --->  Cleaned, standardized, deduplicated data
 │  crm_sales_details                   │
 │  erp_cust_az12                       │
 │  erp_loc_a101                        │
