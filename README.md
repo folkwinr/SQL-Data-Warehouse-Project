@@ -175,7 +175,7 @@ Instead of creating physical tables, this layer uses SQL **Views** built on top 
 
 ---
 
-#  Business Rules
+##  Business Rules
 
 A few business rules were applied while building the Gold layer.
 
@@ -188,7 +188,7 @@ A few business rules were applied while building the Gold layer.
 
 ---
 
-#  Data Quality Checks
+##  Data Quality Checks
 
 Several validation checks were performed to make sure the data is reliable.
 
@@ -205,7 +205,7 @@ The checks include:
 
 ---
 
-#  Final Output
+##  Final Output
 
 The completed Gold layer can be used for:
 
