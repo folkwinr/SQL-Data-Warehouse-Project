@@ -217,23 +217,6 @@ The completed Gold layer can be used for:
 
 ---
 
-## Data Quality Checks
-
-`tests/quality_checks_silver.sql` runs after each Silver load to validate transformation correctness. Checks are organized by table and cover:
-
-| Category | Examples |
-|----------|----------|
-| **Primary key integrity** | No `NULL` or duplicate customer/product IDs |
-| **String hygiene** | No leading/trailing whitespace in key fields |
-| **Standardized values** | Gender, marital status, product line, country only contain expected values |
-| **Date validity** | No future birth dates; `order_dt` precedes `ship_dt` and `due_dt`; `prd_start_dt` precedes `prd_end_dt` |
-| **Business rule enforcement** | `sls_sales = sls_quantity × sls_price` for all rows |
-| **Referential integrity** | Sales product keys exist in product table; customer IDs join correctly across CRM and ERP |
-
-Each query is expected to return zero rows after a clean load.
-
----
-
 ## Technologies
 
 - **SQL Server** — database engine, stored procedures, window functions
