@@ -47,6 +47,11 @@ The main goals of this project are:
 ## Architecture Overview
 
 ---
+The project follows the Medallion Architecture, where data moves through three layers:
+
+- Bronze – Raw data
+- Silver – Clean and standardized data
+- Gold – Business-ready Star Schema
 
 ```
 CRM System          ERP System
