@@ -32,8 +32,6 @@ The main goals of this project are:
 - Provide trusted data for BI tools
 - Make reporting and dashboard creation easier
 
-A fully functional data warehouse built with **SQL Server**, implementing the **Medallion Architecture** (Bronze → Silver → Gold) to consolidate, clean, and serve data from two source systems: a CRM platform and an ERP system.
-
 ---
 
 ## Data Sources
