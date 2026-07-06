@@ -69,7 +69,7 @@ CRM System              ERP System
                    │ EXEC silver.load_silver
                    ▼
 ┌──────────────────────────────────────┐
-│            SILVER LAYER              │      │
+│            SILVER LAYER              │      
 │                                      │        --->  Cleaned, standardized, deduplicated data  
 │  crm_cust_info                       │      
 │  crm_prd_info                        │
