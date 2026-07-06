@@ -57,9 +57,8 @@ CRM System              ERP System
                     ▼
 ┌──────────────────────────────────────┐
 │            BRONZE LAYER              │
-│        Raw data, no transformation   │
 │                                      │
-│  crm_cust_info                       │
+│  crm_cust_info                       │        --->  Raw data, no transformation 
 │  crm_prd_info                        │
 │  crm_sales_details                   │
 │  erp_cust_az12                       │
@@ -70,10 +69,9 @@ CRM System              ERP System
                    │ EXEC silver.load_silver
                    ▼
 ┌──────────────────────────────────────┐
-│            SILVER LAYER              │
-│   Cleaned, standardized data         │
-│                                      │
-│  crm_cust_info                       │
+│            SILVER LAYER              │      │
+│                                      │        --->  Cleaned, standardized, deduplicated data  
+│  crm_cust_info                       │      
 │  crm_prd_info                        │
 │  crm_sales_details                   │
 │  erp_cust_az12                       │
@@ -84,9 +82,8 @@ CRM System              ERP System
                    │ CREATE VIEW
                    ▼
 ┌──────────────────────────────────────┐
-│             GOLD LAYER               │
-│      Business-ready Star Schema      │
-│                                      │
+│             GOLD LAYER               │      
+│                                      │         --->  Business-ready Star Schema 
 │  dim_customers                       │
 │  dim_products                        │
 │  fact_sales                          │
