@@ -225,41 +225,127 @@ The completed Gold layer can be used for:
 
 ---
 
-## Setup & Usage
+# Setup & Usage
 
-**1. Initialize the database**
+Follow the steps below to build the data warehouse from scratch. The process starts with creating the database, continues with loading each layer, and finishes by validating the final data model.
+
+---
+
+## 1. Create the Database
+
+Start by creating the database and the required schemas (**Bronze**, **Silver**, and **Gold**).
+
+> **Note**
+>
+> This script may drop and recreate the database. Run it in **SQL Server Management Studio (SSMS)** while connected to the **master** database.
+
 ```sql
--- WARNING: drops and recreates the DataWarehouse database
--- Run in SQL Server Management Studio (SSMS) against the master database
-scripts/2_bronze/init_database/init_database.sql
+sql/ddl/create_database.sql
 ```
 
-**2. Create Bronze tables and load procedure**
+---
+
+## 2. Create the Bronze Tables
+
+Create the raw tables that will store data from the CRM and ERP source systems.
+
 ```sql
-scripts/2_bronze/ddl_bronze/ddl_bronze.sql
--- Update BULK INSERT file paths in bronze.load_bronze to match your local dataset directory
+sql/ddl/create_bronze_tables.sql
 ```
 
-**3. Create Silver tables**
-```sql
-scripts/1_silver/ddl_silver/ddl_silver.sql
-```
+---
 
-**4. Create Silver load procedure**
-```sql
-scripts/1_silver/silver_procedure/load_silver_procedure.sql
-```
+## 3. Load the Bronze Layer
 
-**5. Run the pipeline**
+Before running the procedure, update the **BULK INSERT** file paths so they point to your local dataset folder.
+
+Then run:
+
 ```sql
 EXEC bronze.load_bronze;
+```
+
+This procedure loads the raw source files into the Bronze layer without applying any transformations.
+
+---
+
+## 4. Create the Silver Tables
+
+Create the tables that will store the cleaned and standardized data.
+
+```sql
+sql/ddl/create_silver_tables.sql
+```
+
+---
+
+## 5. Load the Silver Layer
+
+Run the Silver ETL process to clean, standardize, and transform the Bronze data.
+
+```sql
 EXEC silver.load_silver;
 ```
 
-**6. Validate**
+---
+
+## 6. Validate the Silver Layer
+
+Run the quality check script to verify that the Silver data was loaded and transformed correctly.
+
 ```sql
--- Run all checks in:
-tests/quality_checks_silver.sql
+sql/silver/quality_checks_silver.sql
 ```
 
-Each column folder under `columns/` contains an `exploration/` script (ad-hoc profiling queries) and a `final_script/` (the transformation logic promoted into the stored procedure).
+---
+
+## 7. Create the Gold Views
+
+Create the final business-ready views used for reporting and analytics.
+
+```sql
+sql/gold/create_gold_views.sql
+```
+
+---
+
+## 8. Validate the Gold Layer
+
+Run the final quality checks to validate surrogate keys and fact-to-dimension relationships.
+
+```sql
+sql/gold/quality_checks_gold.sql
+```
+
+---
+
+# Recommended Execution Order
+
+Run the scripts in the following order:
+
+```text
+1. create_database.sql
+2. create_bronze_tables.sql
+3. load_bronze.sql
+4. EXEC bronze.load_bronze
+
+5. create_silver_tables.sql
+6. load_silver.sql
+7. EXEC silver.load_silver
+
+8. quality_checks_silver.sql
+
+9. create_gold_views.sql
+10. quality_checks_gold.sql
+```
+
+---
+
+# Notes
+
+- Run all scripts using **SQL Server Management Studio (SSMS)**.
+- Update the **BULK INSERT** file paths before loading the Bronze layer.
+- The **Bronze** layer stores raw source data.
+- The **Silver** layer cleans and standardizes the data.
+- The **Gold** layer provides business-ready views for reporting and analytics.
+- Run the quality check scripts after each layer to ensure the data is correct.
