@@ -47,44 +47,50 @@ The main goals of this project are:
 ## Architecture Overview
 ---
 
-```
-CRM System          ERP System
-(CSV exports)       (CSV exports)
-     │                   │
-     ▼                   ▼
-┌─────────────────────────────┐
-│         BRONZE LAYER        │   Raw ingestion, no transformation
-│                             │
-│  crm_cust_info              │
-│  crm_prd_info               │
-│  crm_sales_details          │
-│  erp_cust_az12              │
-│  erp_loc_a101               │
-│  erp_px_cat_g1v2            │
-└────────────┬────────────────┘
-             │
-             │ EXEC bronze.load_bronze
-             ▼
-┌─────────────────────────────┐
-│         SILVER LAYER        │   Cleaned, standardized, deduplicated
-│                             │
-│  crm_cust_info              │
-│  crm_prd_info               │
-│  crm_sales_details          │
-│  erp_cust_az12              │
-│  erp_loc_a101               │
-│  erp_px_cat_g1v2            │
-└────────────┬────────────────┘
-             │
-             │ EXEC silver.load_silver
-             ▼
-┌─────────────────────────────┐
-│          GOLD LAYER         │   Business-ready Star Schema
-│                             │
-│  dim_customers              │
-│  dim_products               │
-│  fact_sales                 │
-└─────────────────────────────┘
+```text
+CRM System              ERP System
+(CSV exports)           (CSV exports)
+      │                       │
+      └─────────────┬─────────┘
+                    │
+                    │ EXEC bronze.load_bronze
+                    ▼
+┌──────────────────────────────────────┐
+│            BRONZE LAYER              │
+│        Raw data, no transformation   │
+│                                      │
+│  crm_cust_info                       │
+│  crm_prd_info                        │
+│  crm_sales_details                   │
+│  erp_cust_az12                       │
+│  erp_loc_a101                        │
+│  erp_px_cat_g1v2                     │
+└──────────────────┬───────────────────┘
+                   │
+                   │ EXEC silver.load_silver
+                   ▼
+┌──────────────────────────────────────┐
+│            SILVER LAYER              │
+│   Cleaned, standardized data         │
+│                                      │
+│  crm_cust_info                       │
+│  crm_prd_info                        │
+│  crm_sales_details                   │
+│  erp_cust_az12                       │
+│  erp_loc_a101                        │
+│  erp_px_cat_g1v2                     │
+└──────────────────┬───────────────────┘
+                   │
+                   │ CREATE VIEW
+                   ▼
+┌──────────────────────────────────────┐
+│             GOLD LAYER               │
+│      Business-ready Star Schema      │
+│                                      │
+│  dim_customers                       │
+│  dim_products                        │
+│  fact_sales                          │
+└──────────────────────────────────────┘
 ```
 ---
 
@@ -180,7 +186,7 @@ A few business rules were applied while building the Gold layer.
 - ERP data is used to enrich customer and product details.
 - CRM gender has priority over ERP gender.
 - ERP gender is only used when CRM data is missing.
-- Only active products are included in the product dimension.
+- Only active products are included in `gold.dim_products` using `prd_end_dt IS NULL`.
 - Fact tables use surrogate keys from the dimension tables.
 
 ---
@@ -316,13 +322,8 @@ sql/gold/quality_checks_gold.sql
 
 ---
 
-
-
 # Notes
 
-- Run all scripts using **SQL Server Management Studio (SSMS)**.
-- Update the **BULK INSERT** file paths before loading the Bronze layer.
-- The **Bronze** layer stores raw source data.
-- The **Silver** layer cleans and standardizes the data.
-- The **Gold** layer provides business-ready views for reporting and analytics.
-- Run the quality check scripts after each layer to ensure the data is correct.
+- Run all scripts in SQL Server Management Studio.
+- Update local CSV file paths before loading the Bronze layer.
+- Run quality checks after loading Silver and after creating Gold views.
