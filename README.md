@@ -319,27 +319,7 @@ sql/gold/quality_checks_gold.sql
 
 ---
 
-# Recommended Execution Order
 
-Run the scripts in the following order:
-
-```text
-1. create_database.sql
-2. create_bronze_tables.sql
-3. load_bronze.sql
-4. EXEC bronze.load_bronze
-
-5. create_silver_tables.sql
-6. load_silver.sql
-7. EXEC silver.load_silver
-
-8. quality_checks_silver.sql
-
-9. create_gold_views.sql
-10. quality_checks_gold.sql
-```
-
----
 
 # Notes
 
