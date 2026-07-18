@@ -226,8 +226,7 @@ The completed Gold layer can be used for:
 
 ---
 
-````markdown
-# Setup & Usage
+## Setup & Usage
 
 Follow the steps below to build the data warehouse from scratch. The process starts with creating the database, continues with loading each layer, and finishes by validating the final data model.
 
@@ -347,7 +346,7 @@ tests/quality_checks_gold.sql
 
 ---
 
-# Notes
+## Notes
 
 - Run all scripts in **SQL Server Management Studio**.
 - Update local CSV file paths before loading the Bronze layer.
