@@ -232,7 +232,7 @@ Follow the steps below to build the data warehouse from scratch. The process sta
 
 ---
 
-## 1. Create the Database
+### 1. Create the Database
 
 Start by creating the database and the required schemas (**Bronze**, **Silver**, and **Gold**).
 
@@ -246,7 +246,7 @@ scripts/init_database.sql
 
 ---
 
-## 2. Create the Bronze Tables
+### 2. Create the Bronze Tables
 
 Create the raw tables that will store data from the CRM and ERP source systems.
 
@@ -256,7 +256,7 @@ scripts/bronze/ddl_bronze.sql
 
 ---
 
-## 3. Create the Bronze Load Procedure
+### 3. Create the Bronze Load Procedure
 
 Create the stored procedure responsible for loading the source files into the Bronze layer.
 
@@ -266,7 +266,7 @@ scripts/bronze/proc_load_bronze.sql
 
 ---
 
-## 4. Load the Bronze Layer
+### 4. Load the Bronze Layer
 
 Before running the procedure, update the **BULK INSERT** file paths so they point to your local dataset folder.
 
@@ -280,7 +280,7 @@ This procedure loads the raw source data into the Bronze layer without applying 
 
 ---
 
-## 5. Create the Silver Tables
+### 5. Create the Silver Tables
 
 Create the tables that will store the cleaned and standardized data.
 
@@ -290,7 +290,7 @@ scripts/silver/ddl_silver.sql
 
 ---
 
-## 6. Create the Silver Load Procedure
+### 6. Create the Silver Load Procedure
 
 Create the stored procedure responsible for transforming Bronze data into the Silver layer.
 
@@ -300,7 +300,7 @@ scripts/silver/proc_load_silver.sql
 
 ---
 
-## 7. Load the Silver Layer
+### 7. Load the Silver Layer
 
 Run the Silver ETL process to clean, standardize, and transform the Bronze data.
 
@@ -310,7 +310,7 @@ EXEC silver.load_silver;
 
 ---
 
-## 8. Validate the Silver Layer
+### 8. Validate the Silver Layer
 
 Run the quality check script to verify that the Silver data was loaded and transformed correctly.
 
@@ -320,7 +320,7 @@ tests/quality_checks_silver.sql
 
 ---
 
-## 9. Create the Gold Views
+### 9. Create the Gold Views
 
 Create the business-ready views used for reporting and analytics.
 
@@ -336,7 +336,7 @@ This script creates the following views:
 
 ---
 
-## 10. Validate the Gold Layer
+### 10. Validate the Gold Layer
 
 Run the final quality checks to validate surrogate keys and fact-to-dimension relationships.
 
