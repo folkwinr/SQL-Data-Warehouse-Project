@@ -226,6 +226,7 @@ The completed Gold layer can be used for:
 
 ---
 
+````markdown
 # Setup & Usage
 
 Follow the steps below to build the data warehouse from scratch. The process starts with creating the database, continues with loading each layer, and finishes by validating the final data model.
@@ -240,8 +241,8 @@ Start by creating the database and the required schemas (**Bronze**, **Silver**,
 >
 > This script may drop and recreate the database. Run it in **SQL Server Management Studio (SSMS)** while connected to the **master** database.
 
-```sql
-sql/ddl/create_database.sql
+```text
+scripts/init_database.sql
 ```
 
 ---
@@ -250,8 +251,8 @@ sql/ddl/create_database.sql
 
 Create the raw tables that will store data from the CRM and ERP source systems.
 
-```sql
-sql/ddl/create_bronze_tables.sql
+```text
+scripts/bronze/ddl_bronze.sql
 ```
 
 ---
@@ -260,8 +261,8 @@ sql/ddl/create_bronze_tables.sql
 
 Create the stored procedure responsible for loading the source files into the Bronze layer.
 
-```sql
-sql/bronze/load_bronze.sql
+```text
+scripts/bronze/proc_load_bronze.sql
 ```
 
 ---
@@ -284,8 +285,8 @@ This procedure loads the raw source data into the Bronze layer without applying 
 
 Create the tables that will store the cleaned and standardized data.
 
-```sql
-sql/ddl/create_silver_tables.sql
+```text
+scripts/silver/ddl_silver.sql
 ```
 
 ---
@@ -294,8 +295,8 @@ sql/ddl/create_silver_tables.sql
 
 Create the stored procedure responsible for transforming Bronze data into the Silver layer.
 
-```sql
-sql/silver/load_silver.sql
+```text
+scripts/silver/proc_load_silver.sql
 ```
 
 ---
@@ -314,8 +315,8 @@ EXEC silver.load_silver;
 
 Run the quality check script to verify that the Silver data was loaded and transformed correctly.
 
-```sql
-sql/silver/quality_checks_silver.sql
+```text
+tests/quality_checks_silver.sql
 ```
 
 ---
@@ -324,9 +325,15 @@ sql/silver/quality_checks_silver.sql
 
 Create the business-ready views used for reporting and analytics.
 
-```sql
-sql/gold/create_gold_views.sql
+```text
+scripts/gold/ddl_gold.sql
 ```
+
+This script creates the following views:
+
+- `gold.dim_customers`
+- `gold.dim_products`
+- `gold.fact_sales`
 
 ---
 
@@ -334,14 +341,17 @@ sql/gold/create_gold_views.sql
 
 Run the final quality checks to validate surrogate keys and fact-to-dimension relationships.
 
-```sql
-sql/gold/quality_checks_gold.sql
+```text
+tests/quality_checks_gold.sql
 ```
 
 ---
 
 # Notes
 
-- Run all scripts in SQL Server Management Studio.
+- Run all scripts in **SQL Server Management Studio**.
 - Update local CSV file paths before loading the Bronze layer.
 - Run quality checks after loading Silver and after creating Gold views.
+- Follow the script order above to avoid dependency errors.
+````
+
